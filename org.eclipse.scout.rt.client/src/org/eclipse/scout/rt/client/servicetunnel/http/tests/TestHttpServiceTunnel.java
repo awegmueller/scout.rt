@@ -4,16 +4,19 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  ******************************************************************************/
 package org.eclipse.scout.rt.client.servicetunnel.http.tests;
 
+import java.net.URL;
+
 import org.eclipse.scout.commons.exception.ProcessingException;
 import org.eclipse.scout.rt.client.AbstractClientSession;
-import org.eclipse.scout.rt.client.servicetunnel.ServiceTunnelUtility;
-import org.eclipse.scout.rt.client.servicetunnel.http.HttpServiceTunnel;
+import org.eclipse.scout.rt.client.servicetunnel.http.ClientHttpServiceTunnel;
+import org.eclipse.scout.rt.servicetunnel.ServiceTunnelUtility;
+import org.eclipse.scout.rt.servicetunnel.http.HttpUtility;
 import org.eclipse.scout.rt.shared.services.common.ping.IPingService;
 
 /**
@@ -41,7 +44,8 @@ public final class TestHttpServiceTunnel {
 
     @Override
     protected void execLoadSession() throws ProcessingException {
-      HttpServiceTunnel tunnel = new HttpServiceTunnel(this, "https://tools.bsiag.com/bsicrm/process", "999.999.999");
+      URL url = HttpUtility.createURL("https://tools.bsiag.com/bsicrm/process");
+      ClientHttpServiceTunnel tunnel = new ClientHttpServiceTunnel(this, url, "999.999.999");
       tunnel.setClientNotificationPollInterval(-1);
       setServiceTunnel(tunnel);
     }
