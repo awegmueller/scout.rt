@@ -232,7 +232,12 @@ public abstract class AbstractSqlStyle implements ISqlStyle {
       return new SqlBind(Types.NUMERIC, o);
     }
     else if (Character.class.isAssignableFrom(c)) {
-      return new SqlBind(Types.VARCHAR, o);
+      if (o == null) {
+        return new SqlBind(Types.VARCHAR, o);
+      }
+      else {
+        return new SqlBind(Types.VARCHAR, o.toString());
+      }
     }
     else if (String.class.isAssignableFrom(c) || char[].class == c) {
       if (o == null) {
