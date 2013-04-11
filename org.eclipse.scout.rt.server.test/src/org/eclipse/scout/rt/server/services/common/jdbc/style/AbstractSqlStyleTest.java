@@ -70,6 +70,7 @@ public class AbstractSqlStyleTest {
     Character c = Character.valueOf('x');
     SqlBind bin = sql.buildBindFor(c, Character.class);
     Assert.assertEquals(Types.VARCHAR, bin.getSqlType());
+    Assert.assertTrue(bin.getValue() instanceof String);
   }
 
 }
