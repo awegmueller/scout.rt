@@ -404,7 +404,7 @@ public interface ISwingEnvironment {
    *
    * @param table
    *          Table model
-   * @since Bugzilla bug 405354
+   * @since 3.9.0
    */
 
   ISwingScoutTable createTable(ITable table);
@@ -418,7 +418,7 @@ public interface ISwingEnvironment {
    * @param scoutColumn
    *          the corresponding scout table column
    * @return
-   * @since Bugzilla bug 406059
+   * @since 3.9.0
    */
   SwingTableColumn createColumn(int swingModelIndex, IColumn scoutColumn);
 
