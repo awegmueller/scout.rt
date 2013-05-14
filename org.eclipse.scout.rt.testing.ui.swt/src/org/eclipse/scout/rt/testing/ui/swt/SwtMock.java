@@ -30,7 +30,7 @@ import org.eclipse.scout.commons.logger.ScoutLogManager;
 import org.eclipse.scout.rt.client.ClientSyncJob;
 import org.eclipse.scout.rt.client.IClientSession;
 import org.eclipse.scout.rt.client.ui.basic.table.ITableRow;
-import org.eclipse.scout.rt.testing.shared.OsUtility;
+import org.eclipse.scout.rt.testing.commons.OsUtility;
 import org.eclipse.scout.rt.testing.shared.TestingUtility;
 import org.eclipse.scout.rt.testing.shared.WaitCondition;
 import org.eclipse.scout.rt.ui.swt.basic.ISwtScoutComposite;
@@ -1128,5 +1128,17 @@ public class SwtMock implements IGuiMock {
     finally {
       waitForIdle();
     }
+  }
+
+  @Override
+  public void clickLeftOnSmartFieldMagnifier(FieldState fieldState) {
+    gotoPoint(fieldState.x + fieldState.width + 10, fieldState.y + 10);
+    clickLeft();
+  }
+
+  @Override
+  public void clickRightOnSmartFieldMagnifier(FieldState fieldState) {
+    gotoPoint(fieldState.x + fieldState.width + 10, fieldState.y + 10);
+    clickRight();
   }
 }

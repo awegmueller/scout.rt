@@ -7,11 +7,13 @@
 
       <unit id="org.eclipse.equinox.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.platform.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.platform.source.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.jdt.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.jdt.source.feature.group" version="0.0.0"/>
     </location>
 
     <location includeAllPlatforms="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
-      <repository id="orbit_S20130308121626" location="http://download.eclipse.org/tools/orbit/downloads/drops/S20130308121626/repository/"/>
+      <repository id="orbit_S20130427215344" location="http://download.eclipse.org/tools/orbit/downloads/drops/S20130427215344/repository/"/>
 
       <unit id="javax.servlet" version="2.5.0.v201103041518"/>
       <unit id="javax.servlet.source" version="2.5.0.v201103041518"/>
@@ -56,8 +58,8 @@
       <repository id="scout_nightly" location="http://download.eclipse.org/scout/nightly"/>
 
       <unit id="org.eclipse.scout.rt.source.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.scout.rt.rap.source.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.scout.rt.testing.source.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.scout.sdk.testing.source.feature.group" version="0.0.0"/>
     </location>
   </locations>
 </target>

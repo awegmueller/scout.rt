@@ -28,6 +28,7 @@ import org.eclipse.scout.rt.client.IClientSession;
 import org.eclipse.scout.rt.client.ui.action.IAction;
 import org.eclipse.scout.rt.client.ui.basic.filechooser.IFileChooser;
 import org.eclipse.scout.rt.client.ui.basic.table.ITable;
+import org.eclipse.scout.rt.client.ui.basic.table.columns.IColumn;
 import org.eclipse.scout.rt.client.ui.desktop.IDesktop;
 import org.eclipse.scout.rt.client.ui.form.FormEvent;
 import org.eclipse.scout.rt.client.ui.form.IForm;
@@ -36,6 +37,7 @@ import org.eclipse.scout.rt.client.ui.form.fields.groupbox.IGroupBox;
 import org.eclipse.scout.rt.client.ui.messagebox.IMessageBox;
 import org.eclipse.scout.rt.ui.swing.action.ISwingScoutAction;
 import org.eclipse.scout.rt.ui.swing.basic.table.ISwingScoutTable;
+import org.eclipse.scout.rt.ui.swing.basic.table.SwingTableColumn;
 import org.eclipse.scout.rt.ui.swing.ext.JDialogEx;
 import org.eclipse.scout.rt.ui.swing.ext.JStatusLabelEx;
 import org.eclipse.scout.rt.ui.swing.form.ISwingScoutForm;
@@ -58,7 +60,7 @@ public interface ISwingEnvironment {
   /**
    * {@link Boolean} busy/idle handling Use positive edge from swing 0->1 and
    * negative edge from scout 1->0
-   * 
+   *
    * @deprecated replaced by {@link org.eclipse.scout.rt.ui.swing.ext.busy.SwingBusyHandler SwingBusyHandler} Will be
    *             removed in Release 3.10.
    */
@@ -130,7 +132,7 @@ public interface ISwingEnvironment {
    * Customize the ui defaults table.
    * <p>
    * Default entries include:
-   * 
+   *
    * <pre>
    * <li><b>ActivityMap, Calendar</b>
    * Table.focusCellForeground (Color)
@@ -293,7 +295,7 @@ public interface ISwingEnvironment {
    * create a gui for a list of action, takes care of duplicate, leading and trailing separator handling and
    * recursively creates and attaches child actions on {@link org.eclipse.scout.rt.client.ui.action.tree.IActionNode
    * IActionNode}s and menus
-   * 
+   *
    * @param parent
    *          must not be null, typically a {@link javax.swing.JPopupMenu JPopupMenu}, a {@link javax.swing.JMenu JMenu}
    *          or a {@link javax.swing.JMenuBar JMenuBar}
@@ -324,7 +326,7 @@ public interface ISwingEnvironment {
    * <p>
    * The job is only run when it reaches the model within the cancelTimeout. This means if the job is delayed longer
    * than cancelTimeout millis when the model job runs it, then the job is ignored.
-   * 
+   *
    * @return the created and scheduled job, a {@link org.eclipse.scout.rt.client.ClientJob ClientJob}
    */
   JobEx invokeScoutLater(Runnable j, long cancelTimeout);
@@ -353,7 +355,7 @@ public interface ISwingEnvironment {
   /**
    * Creates the logo of the application. May return a simple JLabel with an icon or an animation.
    * The default impl. creates a JLabel and uses the icon with the ID "logo".
-   * 
+   *
    * @return
    */
   JComponent createLogo();
@@ -384,14 +386,14 @@ public interface ISwingEnvironment {
 
   /**
    * Enables customization of JDialogEx by returning subtypes.
-   * 
+   *
    * @return
    */
   JDialogEx createJDialogEx(Dialog swingParent);
 
   /**
    * Enables customization of JDialogEx by returning subtypes.
-   * 
+   *
    * @return
    */
   JDialogEx createJDialogEx(Frame swingParent);
@@ -399,12 +401,25 @@ public interface ISwingEnvironment {
   /**
    * Creates a swing scout table instance for the given table model. The default implementation returns a
    * SwingScoutTable instance.
-   * 
+   *
    * @param table
    *          Table model
-   * @return
    * @since Bugzilla bug 405354
    */
+
   ISwingScoutTable createTable(ITable table);
+
+  /**
+   * Creates a swing scout table column instance for the given column model. The default implementation returns a
+   * SwingTableColumn instance.
+   *
+   * @param swingModelIndex
+   *          modelIndex used to create the swing {@link javax.swing.table.TableColumn TableColumn}
+   * @param scoutColumn
+   *          the corresponding scout table column
+   * @return
+   * @since 3.9.0
+   */
+  SwingTableColumn createColumn(int swingModelIndex, IColumn scoutColumn);
 
 }
