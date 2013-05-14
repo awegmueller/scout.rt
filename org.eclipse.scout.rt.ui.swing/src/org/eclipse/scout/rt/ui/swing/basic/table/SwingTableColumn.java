@@ -39,7 +39,7 @@ public class SwingTableColumn extends TableColumn {
   /**
    * Provides the column width, can be overridden to apply some UI transformations.
    * Default implementation returns {@link IColumn#getWidth()}.
-   * 
+   *
    * @return width
    */
   protected int getScoutColumnWidth() {
@@ -48,7 +48,7 @@ public class SwingTableColumn extends TableColumn {
 
   /**
    * Getter for the {@link IColumn} (scout model element represented by this column)
-   * 
+   *
    * @return column
    */
   public IColumn getScoutColumn() {
