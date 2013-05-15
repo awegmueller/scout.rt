@@ -612,7 +612,7 @@ public abstract class AbstractSwingEnvironment implements ISwingEnvironment {
    * </pre>
    */
   protected void decorateAppZone(RootPaneContainer root) {
-    String zone = Activator.getDefault().getBundle().getBundleContext().getProperty("app.zone");
+    String zone = SwingUtility.getBundleContextProperty("app.zone");
     if (zone == null) {
       //production
     }

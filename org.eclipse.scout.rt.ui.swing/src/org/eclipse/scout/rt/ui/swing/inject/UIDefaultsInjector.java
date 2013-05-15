@@ -176,7 +176,7 @@ public class UIDefaultsInjector {
 
   protected IconUIResource getSplashUIResource() {
     IconUIResource iconresource = null;
-    String splashPathProp = Activator.getDefault().getBundle().getBundleContext().getProperty("osgi.splashPath");
+    String splashPathProp = SwingUtility.getBundleContextProperty("osgi.splashPath");
     try {
       if (!StringUtility.isNullOrEmpty(splashPathProp)) {
         Path p = new Path(splashPathProp);
