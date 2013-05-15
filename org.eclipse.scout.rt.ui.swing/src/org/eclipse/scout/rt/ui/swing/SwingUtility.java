@@ -70,6 +70,7 @@ import javax.swing.plaf.basic.BasicHTML;
 import javax.swing.text.JTextComponent;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.scout.commons.CompareUtility;
 import org.eclipse.scout.commons.StringUtility;
 import org.eclipse.scout.commons.dnd.FileListTransferObject;
@@ -92,11 +93,12 @@ import org.eclipse.scout.rt.ui.swing.simulator.SimulatorAction;
 import org.eclipse.scout.rt.ui.swing.simulator.SwingScoutSimulator;
 
 public final class SwingUtility {
+
   private static final IScoutLogger LOG = ScoutLogManager.getLogger(SwingUtility.class);
 
   public static final boolean IS_JAVA_7_OR_GREATER = CompareUtility.compareTo(System.getProperty("java.version"), "1.7") >= 0;
-  public static final boolean DO_RESET_COMPONENT_BOUNDS = StringUtility.parseBoolean(Activator.getDefault().getBundle().getBundleContext().getProperty("scout.ui.layout.resetBoundsOnInvalidate"), true);
-  public static final boolean VERIFY_INPUT_ON_WINDOW_CLOSED = StringUtility.parseBoolean(Activator.getDefault().getBundle().getBundleContext().getProperty("scout.ui.verifyInputOnWindowClosed"), false);
+  public static final boolean DO_RESET_COMPONENT_BOUNDS = StringUtility.parseBoolean(getBundleContextProperty("scout.ui.layout.resetBoundsOnInvalidate"), true);
+  public static final boolean VERIFY_INPUT_ON_WINDOW_CLOSED = StringUtility.parseBoolean(getBundleContextProperty("scout.ui.verifyInputOnWindowClosed"), false);
 
   private SwingUtility() {
   }
@@ -896,7 +898,7 @@ public final class SwingUtility {
    * will be returned. In Windows environments these circumstances (task bar on a none primary screen) will be very rare
    * and therefore ignored until the bug will be fixed in a future Java version.
    * </p>
-   * 
+   *
    * @param screenDevice
    *          a screen thats {@link GraphicsConfiguration} will be used to determine the insets
    * @return the insets of this toolkit's screen, in pixels, if the given screen device is the primary screen, otherwise
@@ -1173,7 +1175,7 @@ public final class SwingUtility {
    * lies within the specified frame.
    * <p>
    * Intended be used in custom implementations of {@link JComponent#getToolTipLocation(MouseEvent)}.
-   * 
+   *
    * @param e
    *          the event that caused the display of the tool tip
    * @param c
@@ -1271,6 +1273,24 @@ public final class SwingUtility {
     for (Component c : components) {
       c.setBounds(0, 0, 0, 0);
     }
+  }
+
+  /**
+   * Returns safely a property from the bundle context of the bundle activator. Use this method in the Scout Swing
+   * plug-in whenever you must read a property from the bundle context. This allows to use the Swing classes in a
+   * non OSGI environment, which is useful for development and (automated) testing.
+   *
+   * @param propertyName
+   *          Name of the property
+   * @return Value of the given property or null if the property is not defined
+   * @since 3.9.0
+   */
+  public static String getBundleContextProperty(String propertyName) {
+    Plugin activator = Activator.getDefault();
+    if (activator != null) {
+      return activator.getBundle().getBundleContext().getProperty(propertyName);
+    }
+    return null;
   }
 
   private static class CopyPasteMenuSupport extends MouseAdapter implements FocusListener {
