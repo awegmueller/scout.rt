@@ -898,7 +898,7 @@ public final class SwingUtility {
    * will be returned. In Windows environments these circumstances (task bar on a none primary screen) will be very rare
    * and therefore ignored until the bug will be fixed in a future Java version.
    * </p>
-   *
+   * 
    * @param screenDevice
    *          a screen thats {@link GraphicsConfiguration} will be used to determine the insets
    * @return the insets of this toolkit's screen, in pixels, if the given screen device is the primary screen, otherwise
@@ -1175,7 +1175,7 @@ public final class SwingUtility {
    * lies within the specified frame.
    * <p>
    * Intended be used in custom implementations of {@link JComponent#getToolTipLocation(MouseEvent)}.
-   *
+   * 
    * @param e
    *          the event that caused the display of the tool tip
    * @param c
@@ -1279,7 +1279,7 @@ public final class SwingUtility {
    * Returns safely a property from the bundle context of the bundle activator. Use this method in the Scout Swing
    * plug-in whenever you must read a property from the bundle context. This allows to use the Swing classes in a
    * non OSGI environment, which is useful for development and (automated) testing.
-   *
+   * 
    * @param propertyName
    *          Name of the property
    * @return Value of the given property or null if the property is not defined
@@ -1406,6 +1406,5 @@ public final class SwingUtility {
 
     }
   }// end class
-
 
 }
