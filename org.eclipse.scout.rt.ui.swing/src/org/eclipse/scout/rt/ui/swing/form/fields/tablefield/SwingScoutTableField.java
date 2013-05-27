@@ -141,7 +141,7 @@ public class SwingScoutTableField extends SwingScoutFieldComposite<ITableField<?
           }
         }
         m_tableComposite = newTableComposite;
-        container.add(newTableComposite.getSwingScrollPane());
+        container.add(newTableComposite.getSwingContainer());
         setSwingField(newTableComposite.getSwingTable());
         container.revalidate();
         container.repaint();

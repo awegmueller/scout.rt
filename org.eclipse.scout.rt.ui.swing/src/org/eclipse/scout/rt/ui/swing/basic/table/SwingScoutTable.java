@@ -266,6 +266,11 @@ public class SwingScoutTable extends SwingScoutComposite<ITable> implements ISwi
   }
 
   @Override
+  public JComponent getSwingContainer() {
+    return m_swingScrollPane;
+  }
+
+  @Override
   public JScrollPane getSwingScrollPane() {
     return m_swingScrollPane;
   }
