@@ -344,14 +344,4 @@
               name="Scout SWT Keybindings Scheme">
       </scheme>
    </extension>
-   <extension
-         point="org.eclipse.ui.views">
-      <view
-            allowMultiple="false"
-            class="org.eclipse.scout.rt.ui.swt.window.desktop.view.ToolbuttonViewPart"
-            id="org.eclipse.scout.rt.ui.swt.window.desktop.view.ToolbuttonViewPart"
-            name="ToolbuttonView"
-            restorable="false">
-      </view>
-   </extension>
 </plugin>

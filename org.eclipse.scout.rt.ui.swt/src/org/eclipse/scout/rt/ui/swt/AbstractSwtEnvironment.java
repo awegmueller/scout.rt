@@ -84,7 +84,6 @@ import org.eclipse.scout.rt.ui.swt.window.desktop.editor.ScoutFormEditorInput;
 import org.eclipse.scout.rt.ui.swt.window.desktop.tray.ISwtScoutTray;
 import org.eclipse.scout.rt.ui.swt.window.desktop.tray.SwtScoutTray;
 import org.eclipse.scout.rt.ui.swt.window.desktop.view.AbstractScoutView;
-import org.eclipse.scout.rt.ui.swt.window.desktop.view.ToolbuttonViewPart;
 import org.eclipse.scout.rt.ui.swt.window.dialog.SwtScoutDialog;
 import org.eclipse.scout.rt.ui.swt.window.filechooser.SwtScoutFileChooser;
 import org.eclipse.scout.rt.ui.swt.window.messagebox.SwtScoutMessageBoxDialog;
@@ -468,9 +467,6 @@ public abstract class AbstractSwtEnvironment extends AbstractPropertyObserver im
           }
         }
       });
-      // open toolbarview
-      ToolbuttonViewPart view = (ToolbuttonViewPart) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(ToolbuttonViewPart.VIEW_ID);
-      view.initialize(this);
       // notify ui available
       Runnable job = new Runnable() {
         @Override
