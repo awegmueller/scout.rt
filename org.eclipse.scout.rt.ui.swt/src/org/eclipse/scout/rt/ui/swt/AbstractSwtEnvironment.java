@@ -24,6 +24,7 @@ import java.util.Map.Entry;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.scout.commons.CompareUtility;
@@ -136,6 +137,14 @@ import org.osgi.framework.Version;
  */
 public abstract class AbstractSwtEnvironment extends AbstractPropertyObserver implements ISwtEnvironment {
   private static IScoutLogger LOG = ScoutLogManager.getLogger(AbstractSwtEnvironment.class);
+  private static boolean IS_E4 = false;
+
+  static {
+    Object bundleVersion = Platform.getBundle("org.eclipse.platform").getHeaders().get("Bundle-Version");
+    if (bundleVersion instanceof String) {
+      IS_E4 = CompareUtility.compareTo((String) bundleVersion, "4.0") >= 0;
+    }
+  }
 
   private final Bundle m_applicationBundle;
 
@@ -703,9 +712,15 @@ public abstract class AbstractSwtEnvironment extends AbstractPropertyObserver im
   }
 
   // icon handling
+
   @Override
   public Image getIcon(String name) {
-    return m_iconLocator.getIcon(name);
+    return getIcon(name, ICON_DECORATION_NONE);
+  }
+
+  @Override
+  public Image getIcon(String name, int iconDecoration) {
+    return m_iconLocator.getIcon(name, iconDecoration);
   }
 
   @Override
@@ -1118,14 +1133,30 @@ public abstract class AbstractSwtEnvironment extends AbstractPropertyObserver im
     if (form == null) {
       return;
     }
-    ISwtScoutPart part = m_openForms.remove(form);
+    final ISwtScoutPart part = m_openForms.remove(form);
     if (part != null && part.getForm().equals(form)) {
-      try {
-        part.closePart();
+      // Workaround for bugzilla 385618 & 408741
+      if (IS_E4) {
+        getDisplay().asyncExec(new Runnable() {
+          @Override
+          public void run() {
+            closePart(part);
+          }
+        });
       }
-      catch (ProcessingException e) {
-        LOG.warn("could not close part.", e);
+      // Workaround end
+      else {
+        closePart(part);
       }
+    }
+  }
+
+  private void closePart(ISwtScoutPart part) {
+    try {
+      part.closePart();
+    }
+    catch (ProcessingException e) {
+      LOG.warn("could not close part.", e);
     }
   }
 
