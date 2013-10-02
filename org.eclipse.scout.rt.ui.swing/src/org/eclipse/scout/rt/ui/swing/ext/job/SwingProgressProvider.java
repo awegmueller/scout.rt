@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.core.runtime.jobs.ProgressProvider;
+import org.eclipse.scout.commons.CompareUtility;
 import org.eclipse.scout.commons.beans.IPropertyObserver;
 import org.eclipse.scout.commons.logger.IScoutLogger;
 import org.eclipse.scout.commons.logger.ScoutLogManager;
@@ -44,7 +45,7 @@ public class SwingProgressProvider extends ProgressProvider implements IProperty
   private final PropertyChangeSupport m_propertySupport;
   private final PropertyChangeListener m_jobListener;
   private SwingProgressMonitor m_activeMonitor;
-  private MonitorProperties m_oldMonitorProperties = new MonitorProperties(0, "", "");
+  private MonitorProperties m_activeMonitorProperties = new MonitorProperties(0, "", "");
 
   public SwingProgressProvider() {
     m_listLock = new Object();
@@ -132,21 +133,29 @@ public class SwingProgressProvider extends ProgressProvider implements IProperty
     setActiveMonitor(next);
   }
 
-  private synchronized void setActiveMonitor(SwingProgressMonitor newValue) {
-    MonitorProperties newMonitorProperties = newValue.createMonitorProperties();
-    SwingProgressMonitor oldValue;
-    if (m_oldMonitorProperties.equals(newMonitorProperties)) {
+  /**
+   * This method fires a property change when the monitor instance itself has changed or when one of the monitor
+   * properties (worked, task-name, sub-task-name) has changed.
+   * 
+   * @param newMonitor
+   */
+  private synchronized void setActiveMonitor(SwingProgressMonitor newMonitor) {
+    MonitorProperties newMonitorProperties = null;
+    if (newMonitor != null) {
+      newMonitorProperties = newMonitor.createMonitorProperties();
+    }
+    // when properties have changed, oldValue stays null --> property change is always fired
+    SwingProgressMonitor oldValue = null;
+    if (CompareUtility.equals(m_activeMonitorProperties, newMonitorProperties)) {
       oldValue = m_activeMonitor;
     }
-    else {
-      oldValue = null;
-    }
-    m_oldMonitorProperties = newMonitorProperties;
-    m_activeMonitor = newValue;
-    m_propertySupport.firePropertyChange(PROP_ACTIVE_MONITOR, oldValue, newValue);
+    m_activeMonitorProperties = newMonitorProperties;
+    m_activeMonitor = newMonitor;
+    m_propertySupport.firePropertyChange(PROP_ACTIVE_MONITOR, oldValue, newMonitor);
   }
 
   public SwingProgressMonitor getActiveMonitor() {
     return m_activeMonitor;
   }
+
 }

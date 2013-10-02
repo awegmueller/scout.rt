@@ -29,6 +29,7 @@ import org.eclipse.scout.rt.shared.TEXTS;
  * @since 3.8
  */
 public class SwingBusyHandler extends AbstractBusyHandler {
+
   private static final IScoutLogger LOG = ScoutLogManager.getLogger(SwingBusyHandler.class);
 
   public SwingBusyHandler(IClientSession session) {
