@@ -44,6 +44,7 @@ public class SwingProgressProvider extends ProgressProvider implements IProperty
   private final PropertyChangeSupport m_propertySupport;
   private final PropertyChangeListener m_jobListener;
   private SwingProgressMonitor m_activeMonitor;
+  private MonitorProperties m_oldMonitorProperties = new MonitorProperties(0, "", "");
 
   public SwingProgressProvider() {
     m_listLock = new Object();
@@ -132,7 +133,15 @@ public class SwingProgressProvider extends ProgressProvider implements IProperty
   }
 
   private synchronized void setActiveMonitor(SwingProgressMonitor newValue) {
-    SwingProgressMonitor oldValue = m_activeMonitor;
+    MonitorProperties newMonitorProperties = newValue.createMonitorProperties();
+    SwingProgressMonitor oldValue;
+    if (m_oldMonitorProperties.equals(newMonitorProperties)) {
+      oldValue = m_activeMonitor;
+    }
+    else {
+      oldValue = null;
+    }
+    m_oldMonitorProperties = newMonitorProperties;
     m_activeMonitor = newValue;
     m_propertySupport.firePropertyChange(PROP_ACTIVE_MONITOR, oldValue, newValue);
   }
