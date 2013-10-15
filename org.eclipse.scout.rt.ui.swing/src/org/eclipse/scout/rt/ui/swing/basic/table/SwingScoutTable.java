@@ -266,6 +266,11 @@ public class SwingScoutTable extends SwingScoutComposite<ITable> implements ISwi
   }
 
   @Override
+  public JComponent getSwingContainer() {
+    return m_swingScrollPane;
+  }
+
+  @Override
   public JScrollPane getSwingScrollPane() {
     return m_swingScrollPane;
   }
@@ -826,7 +831,7 @@ public class SwingScoutTable extends SwingScoutComposite<ITable> implements ISwi
         public void run() {
           IMenu[] scoutMenus = getScoutObject().getUIFacade().fireRowPopupFromUI();
           // call swing menu
-          new SwingPopupWorker(getSwingEnvironment(), e.getComponent(), e.getPoint(), scoutMenus).enqueue();
+          new SwingPopupWorker(getSwingEnvironment(), e.getComponent(), e.getPoint(), scoutMenus, false).enqueue();
         }
       };
       getSwingEnvironment().invokeScoutLater(t, 5678);
@@ -937,7 +942,7 @@ public class SwingScoutTable extends SwingScoutComposite<ITable> implements ISwi
         public void run() {
           // call swing menu
           IMenu[] scoutMenus = getScoutObject().getUIFacade().fireHeaderPopupFromUI();
-          new SwingPopupWorker(getSwingEnvironment(), e.getComponent(), e.getPoint(), scoutMenus).enqueue();
+          new SwingPopupWorker(getSwingEnvironment(), e.getComponent(), e.getPoint(), scoutMenus, false).enqueue();
         }
       };
       getSwingEnvironment().invokeScoutLater(t, 5678);
